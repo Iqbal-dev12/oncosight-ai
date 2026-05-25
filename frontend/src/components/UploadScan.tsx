@@ -16,6 +16,14 @@ interface UploadScanProps {
   confidence: number;
   setConfidence: (val: number) => void;
   onNavigateToPredictions: () => void;
+  patientName: string;
+  setPatientName: (val: string) => void;
+  patientAge: string;
+  setPatientAge: (val: string) => void;
+  dob: string;
+  setDob: (val: string) => void;
+  notes: string;
+  setNotes: (val: string) => void;
 }
 
 export default function UploadScan({
@@ -28,17 +36,19 @@ export default function UploadScan({
   scanType,
   confidence,
   setConfidence,
-  onNavigateToPredictions
+  onNavigateToPredictions,
+  patientName,
+  setPatientName,
+  patientAge,
+  setPatientAge,
+  dob,
+  setDob,
+  notes,
+  setNotes
 }: UploadScanProps) {
   const [dragActive, setDragActive] = useState(false);
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Form States
-  const [patientName, setPatientName] = useState('');
-  const [patientAge, setPatientAge] = useState('');
-  const [dob, setDob] = useState('');
-  const [notes, setNotes] = useState('');
 
   // Audio heights
   const [pulseHeights, setPulseHeights] = useState<number[]>([10, 20, 15, 30, 8, 18, 25, 10, 22, 12]);

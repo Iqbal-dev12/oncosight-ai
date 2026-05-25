@@ -7,6 +7,7 @@ import UploadScan from './components/UploadScan';
 import AIPredictions from './components/AIPredictions';
 import Reports from './components/Reports';
 import Patients from './components/Patients';
+import AdvancedFeatures from './components/AdvancedFeatures';
 import BackgroundEffects from './components/BackgroundEffects';
 
 export default function App() {
@@ -17,6 +18,12 @@ export default function App() {
   const [analysisComplete, setAnalysisComplete] = useState<boolean>(false);
   const [confidence, setConfidence] = useState<number>(94);
   const [probability, setProbability] = useState<number>(88);
+
+  // Hoisted Ingestion Form States
+  const [patientName, setPatientName] = useState<string>('');
+  const [patientAge, setPatientAge] = useState<string>('');
+  const [dob, setDob] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
 
   const handleScanSelected = (scanUrl: string, type: 'mri' | 'ct' | 'xray') => {
     setSelectedScan(scanUrl);
@@ -87,6 +94,14 @@ export default function App() {
                 confidence={confidence}
                 setConfidence={setConfidence}
                 onNavigateToPredictions={handleNavigateToPredictions}
+                patientName={patientName}
+                setPatientName={setPatientName}
+                patientAge={patientAge}
+                setPatientAge={setPatientAge}
+                dob={dob}
+                setDob={setDob}
+                notes={notes}
+                setNotes={setNotes}
               />
             </motion.div>
           )}
@@ -104,6 +119,9 @@ export default function App() {
                 scanType={scanType}
                 confidence={confidence}
                 probability={probability}
+                patientName={patientName}
+                patientAge={patientAge}
+                dob={dob}
               />
             </motion.div>
           )}
@@ -116,7 +134,15 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
             >
-              <Reports />
+              <Reports 
+                patientName={patientName}
+                patientAge={patientAge}
+                dob={dob}
+                notes={notes}
+                scanType={scanType}
+                confidence={confidence}
+                analysisComplete={analysisComplete}
+              />
             </motion.div>
           )}
 
@@ -129,6 +155,18 @@ export default function App() {
               transition={{ duration: 0.3 }}
             >
               <Patients />
+            </motion.div>
+          )}
+
+          {activeTab === 'advanced' && (
+            <motion.div
+              key="advanced"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <AdvancedFeatures />
             </motion.div>
           )}
         </AnimatePresence>

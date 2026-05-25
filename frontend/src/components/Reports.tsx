@@ -20,7 +20,25 @@ interface Report {
   findingsArray: string[];
 }
 
-export default function Reports() {
+interface ReportsProps {
+  patientName?: string;
+  patientAge?: string;
+  dob?: string;
+  notes?: string;
+  scanType?: 'mri' | 'ct' | 'xray' | null;
+  confidence?: number;
+  analysisComplete?: boolean;
+}
+
+export default function Reports({
+  patientName,
+  patientAge,
+  dob,
+  notes,
+  scanType,
+  confidence,
+  analysisComplete
+}: ReportsProps) {
   const [selectedReportId, setSelectedReportId] = useState('REP-0412');
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
@@ -28,15 +46,15 @@ export default function Reports() {
   const reports: Report[] = [
     {
       id: 'REP-0412',
-      patientName: 'Arthur Pendelton',
+      patientName: analysisComplete && scanType === 'mri' && patientName ? patientName : 'Arthur Pendelton',
       patientId: 'PT-8842',
-      dob: '1974-04-12',
+      dob: analysisComplete && scanType === 'mri' && dob ? dob : '1974-04-12',
       scanType: 'Brain Tumor MRI (T2/FLAIR)',
       date: '2026-05-25',
       risk: 'High',
-      confidence: '94.2%',
+      confidence: analysisComplete && scanType === 'mri' && confidence ? `${confidence}%` : '94.2%',
       dimensions: '2.4 cm x 1.8 cm',
-      findings: 'Hyperintense neoplastic lesion identified in the left frontal lobe region, exhibiting peripheral vasogenic edema. Strong indication of high-grade glial expansion. Bounding box coordinates resolved with a confidence of 94.2%.',
+      findings: analysisComplete && scanType === 'mri' && notes ? notes : 'Hyperintense neoplastic lesion identified in the left frontal lobe region, exhibiting peripheral vasogenic edema. Strong indication of high-grade glial expansion. Bounding box coordinates resolved with a confidence of 94.2%.',
       findingsArray: [
         'Hyperintense neoplastic lesion detected in left frontal lobe cortex.',
         'Vasogenic edema detected in surrounding parenchymal tissues.',
@@ -47,34 +65,34 @@ export default function Reports() {
     },
     {
       id: 'REP-1089',
-      patientName: 'Sarah Jenkins',
+      patientName: analysisComplete && scanType === 'ct' && patientName ? patientName : 'Sarah Jenkins',
       patientId: 'PT-4109',
-      dob: '1988-11-20',
+      dob: analysisComplete && scanType === 'ct' && dob ? dob : '1988-11-20',
       scanType: 'Lung Tumor CT Scan',
       date: '2026-05-18',
       risk: 'Elevated',
-      confidence: '96.5%',
+      confidence: analysisComplete && scanType === 'ct' && confidence ? `${confidence}%` : '96.5%',
       dimensions: '1.9 cm x 2.1 cm',
-      findings: 'Spiculated density nodule resolved within the right apical lobe sector. Displaying mild central calcification markers and pleural retraction cues. Risk index matches early stage adenocarcinoma pathology.',
+      findings: analysisComplete && scanType === 'ct' && notes ? notes : 'Spiculated density nodule resolved within the right apical lobe sector. Displaying mild central calcification markers and pleural retraction cues. Risk index matches early stage adenocarcinoma pathology.',
       findingsArray: [
         'Spiculated apical nodule of 1.9 cm identified.',
         'Localized pleural retraction signs detected.',
-        'Hilar lymphadenopathy: Under review, borders currently normal.',
+        'Hilar lung borders: Under review, borders currently normal.',
         'Calcification: Minor eccentric calcification observed.'
       ],
       recommendations: 'Recommend chest PET/CT fusion scan to check metabolic activity inside the nodule. Schedule fine-needle lung aspiration within 7 business days. Repeat chest CT scan in 8 weeks to determine volumetric growth velocity.'
     },
     {
       id: 'REP-2154',
-      patientName: 'Marcus Vance',
+      patientName: analysisComplete && scanType === 'xray' && patientName ? patientName : 'Marcus Vance',
       patientId: 'PT-3091',
-      dob: '1962-09-02',
+      dob: analysisComplete && scanType === 'xray' && dob ? dob : '1962-09-02',
       scanType: 'Pneumonia X-Ray',
       date: '2026-05-12',
       risk: 'Low',
-      confidence: '89.8%',
+      confidence: analysisComplete && scanType === 'xray' && confidence ? `${confidence}%` : '89.8%',
       dimensions: '3.2 cm Area',
-      findings: 'Alveolar consolidation resolved within the lower left lung lobe base, displaying prominent air bronchograms and fluid density shifts. No indications of neoplastic masses or pleural effusion.',
+      findings: analysisComplete && scanType === 'xray' && notes ? notes : 'Alveolar consolidation resolved within the lower left lung lobe base, displaying prominent air bronchograms and fluid density shifts. No indications of neoplastic masses or pleural effusion.',
       findingsArray: [
         'Focal lobar consolidation in the left lower lung base.',
         'Air bronchograms observed, suggesting filled alveoli.',
@@ -212,7 +230,10 @@ export default function Reports() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-white/[0.01] border border-white/5 rounded-lg p-4 mb-6">
                 <div>
                   <span className="text-[7.5px] font-mono text-gray-500 uppercase block tracking-wider">Patient Name</span>
-                  <span className="text-xs font-semibold text-white font-display">{selectedReport.patientName}</span>
+                  <span className="text-xs font-semibold text-white font-display">
+                    {selectedReport.patientName}
+                    {selectedReport.patientName === patientName && patientAge ? ` (${patientAge} Yrs)` : ''}
+                  </span>
                 </div>
                 <div>
                   <span className="text-[7.5px] font-mono text-gray-500 uppercase block tracking-wider">Registry ID</span>

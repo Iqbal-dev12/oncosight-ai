@@ -10,13 +10,19 @@ interface AIPredictionsProps {
   scanType: 'mri' | 'ct' | 'xray' | null;
   confidence: number;
   probability: number;
+  patientName?: string;
+  patientAge?: string;
+  dob?: string;
 }
 
 export default function AIPredictions({
   selectedScan,
   scanType,
   confidence,
-  probability
+  probability,
+  patientName,
+  patientAge,
+  dob
 }: AIPredictionsProps) {
   const [showSegmented, setShowSegmented] = useState(true);
 
@@ -81,14 +87,25 @@ export default function AIPredictions({
       <motion.div
         initial={{ opacity: 0, y: -5 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-left border-b border-white/5 pb-6 space-y-2"
+        className="text-left border-b border-white/5 pb-6 space-y-4"
       >
-        <h1 className="text-3xl lg:text-4xl font-bold tracking-tight text-white font-display">
-          AI Diagnostic Predictions
-        </h1>
-        <p className="text-sm text-gray-500 max-w-2xl leading-relaxed">
-          Pathology probability analysis with AI-assisted visualization. Segmented bounds and coordinates resolved in real-time.
-        </p>
+        <div className="space-y-2">
+          <h1 className="text-3xl lg:text-4xl font-bold tracking-tight text-white font-display">
+            AI Diagnostic Predictions
+          </h1>
+          <p className="text-sm text-gray-500 max-w-2xl leading-relaxed">
+            Pathology probability analysis with AI-assisted visualization. Segmented bounds and coordinates resolved in real-time.
+          </p>
+        </div>
+
+        {/* Patient Ingestion Badge */}
+        {patientName && (
+          <div className="text-[10px] font-mono text-gray-500 flex flex-wrap gap-x-5 gap-y-1 select-none border border-white/5 bg-white/[0.01] rounded px-3 py-1.5 w-fit">
+            <span>PATIENT: <strong className="text-white uppercase font-display">{patientName}</strong></span>
+            {patientAge && <span>AGE: <strong className="text-white font-mono">{patientAge} Yrs</strong></span>}
+            {dob && <span>DOB: <strong className="text-white font-mono">{dob}</strong></span>}
+          </div>
+        )}
       </motion.div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">

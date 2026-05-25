@@ -1,4 +1,4 @@
-import { Bell, User } from 'lucide-react';
+import { User } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -23,15 +23,6 @@ export default function Header() {
 
       {/* Control center */}
       <div className="flex items-center gap-4">
-        {/* Notifications */}
-        <button 
-          className="relative p-1.5 rounded border border-white/5 bg-[#0a0b0d] hover:bg-[#12141a] text-gray-500 hover:text-white transition-all duration-200"
-          title="Diagnostic alerts"
-        >
-          <Bell className="h-3.5 w-3.5" />
-          <span className="absolute top-1.5 right-1.5 h-1 w-1 rounded-full bg-clinicalCyan" />
-        </button>
-
         {/* User profile */}
         <div className="flex items-center gap-2.5 border-l border-white/10 pl-4 h-7">
           <div className="text-right hidden sm:block">

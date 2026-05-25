@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Heart, Calendar, User, FileText } from 'lucide-react';
+import { Heart, Calendar, User, FileText } from 'lucide-react';
 
 interface Scan {
   date: string;
@@ -117,13 +117,12 @@ export default function Patients() {
         <div className="lg:col-span-4 space-y-4">
           {/* Search box */}
           <div className="relative">
-            <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-gray-500" />
             <input
               type="text"
               placeholder="Search registry by name or ID..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full clinical-input pl-10 font-sans text-xs"
+              className="w-full clinical-input font-sans text-xs"
             />
           </div>
 
@@ -192,7 +191,7 @@ export default function Patients() {
                       </div>
                       <div>
                         <h4 className="text-xs font-semibold text-white tracking-wide">{patient.name}</h4>
-                        <span className="text-[10px] font-mono text-gray-500 block mt-0.5">{patient.id} • {patient.age} Yrs</span>
+                        <span className="text-[10px] font-mono text-gray-500 block mt-0.5">{patient.id} // {patient.age} Yrs</span>
                       </div>
                     </div>
 

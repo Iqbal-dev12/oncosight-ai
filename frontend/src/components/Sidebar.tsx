@@ -1,4 +1,4 @@
-import { LayoutDashboard, Upload, Brain, FileText, Users } from 'lucide-react';
+import { LayoutDashboard, Upload, Brain, FileText, Users, Sparkles } from 'lucide-react';
 
 interface SidebarProps {
   activeTab: string;
@@ -12,6 +12,7 @@ export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
     { id: 'predictions', label: 'AI Predictions', icon: <Brain className="h-4 w-4" /> },
     { id: 'reports', label: 'Reports', icon: <FileText className="h-4 w-4" /> },
     { id: 'patients', label: 'Patients', icon: <Users className="h-4 w-4" /> },
+    { id: 'advanced', label: 'Advanced Features', icon: <Sparkles className="h-4 w-4" /> },
   ];
 
   return (
