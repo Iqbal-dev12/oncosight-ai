@@ -1,6 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { Upload, BarChart2, Shield } from 'lucide-react';
+import { Upload, BarChart2 } from 'lucide-react';
 
 interface HeroProps {
   setActiveTab: (tab: string) => void;

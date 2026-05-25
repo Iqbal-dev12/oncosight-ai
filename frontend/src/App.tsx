@@ -1,122 +1,141 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Dashboard from './components/Dashboard';
+import UploadScan from './components/UploadScan';
+import AIPredictions from './components/AIPredictions';
+import Reports from './components/Reports';
+import Patients from './components/Patients';
+import BackgroundEffects from './components/BackgroundEffects';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [activeTab, setActiveTab] = useState<string>('dashboard');
+  const [selectedScan, setSelectedScan] = useState<string | null>(null);
+  const [scanType, setScanType] = useState<'mri' | 'ct' | 'xray' | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  const [analysisComplete, setAnalysisComplete] = useState<boolean>(false);
+  const [confidence, setConfidence] = useState<number>(94);
+  const [probability, setProbability] = useState<number>(88);
+
+  const handleScanSelected = (scanUrl: string, type: 'mri' | 'ct' | 'xray') => {
+    setSelectedScan(scanUrl);
+    setScanType(type);
+    setAnalysisComplete(false);
+    setIsAnalyzing(false);
+
+    if (type === 'mri') {
+      setConfidence(94);
+      setProbability(88);
+    } else if (type === 'ct') {
+      setConfidence(96);
+      setProbability(92);
+    } else {
+      setConfidence(89);
+      setProbability(72);
+    }
+  };
+
+  const handleNavigateToPredictions = () => {
+    setActiveTab('predictions');
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="relative min-h-screen bg-black overflow-hidden font-sans text-white select-none">
+      {/* Background shaders & particle system */}
+      <BackgroundEffects />
 
-      <div className="ticks"></div>
+      {/* Top Header */}
+      <Header />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {/* Left Sidebar */}
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* Main Workspace Frame (offset by Header and Sidebar) */}
+      <main className="pl-64 pt-14 min-h-screen relative z-10 w-full">
+        <AnimatePresence mode="wait">
+          {activeTab === 'dashboard' && (
+            <motion.div
+              key="dashboard"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Dashboard 
+                onNavigateToTab={setActiveTab} 
+              />
+            </motion.div>
+          )}
+
+          {activeTab === 'upload' && (
+            <motion.div
+              key="upload"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <UploadScan
+                onScanSelected={handleScanSelected}
+                isAnalyzing={isAnalyzing}
+                setIsAnalyzing={setIsAnalyzing}
+                analysisComplete={analysisComplete}
+                setAnalysisComplete={setAnalysisComplete}
+                selectedScan={selectedScan}
+                scanType={scanType}
+                confidence={confidence}
+                setConfidence={setConfidence}
+                onNavigateToPredictions={handleNavigateToPredictions}
+              />
+            </motion.div>
+          )}
+
+          {activeTab === 'predictions' && (
+            <motion.div
+              key="predictions"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <AIPredictions
+                selectedScan={selectedScan}
+                scanType={scanType}
+                confidence={confidence}
+                probability={probability}
+              />
+            </motion.div>
+          )}
+
+          {activeTab === 'reports' && (
+            <motion.div
+              key="reports"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Reports />
+            </motion.div>
+          )}
+
+          {activeTab === 'patients' && (
+            <motion.div
+              key="patients"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Patients />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
+
+      {/* Faint cyan ambient line at very top */}
+      <div className="fixed top-0 left-0 right-0 h-[1px] bg-clinicalCyan/20 z-40 pointer-events-none" />
+    </div>
+  );
 }
-
-export default App

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,159 +9,86 @@
     @apply bg-black text-white font-sans antialiased overflow-x-hidden;
     background-color: #000000;
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+  }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.9);
+  background: #000000;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 210, 255, 0.3);
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(181, 0, 255, 0.5);
+  background: rgba(0, 180, 216, 0.3);
 }
 
-/* Glassmorphism Classes */
-.glass-panel {
-  background: rgba(10, 10, 10, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Premium Matte Panel Styles */
+.clinical-panel {
+  background-color: #0b0c0e;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.85);
 }
 
-.glass-panel-glow-blue {
-  background: rgba(5, 5, 5, 0.8);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 210, 255, 0.2);
-  box-shadow: 0 0 20px rgba(0, 210, 255, 0.05);
+.clinical-panel-active {
+  background-color: #0b0c0e;
+  border: 1px solid rgba(0, 180, 216, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.85);
 }
 
-.glass-panel-glow-purple {
-  background: rgba(5, 5, 5, 0.8);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(181, 0, 255, 0.2);
-  box-shadow: 0 0 20px rgba(181, 0, 255, 0.05);
+/* Clinical Inputs */
+.clinical-input {
+  background-color: #050608;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  font-size: 12px;
+  color: #ffffff;
+  padding: 10px 14px;
+  transition: all 0.2s ease-in-out;
 }
 
-/* Animated Grid Background */
-.cyber-grid {
-  background-image: 
-    linear-gradient(to right, rgba(0, 210, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 210, 255, 0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: center center;
+.clinical-input:focus {
+  outline: none;
+  border-color: rgba(0, 180, 216, 0.4);
+  background-color: #08090d;
+}
+
+/* Minimal Spotlights */
+.spotlight-top {
   position: absolute;
-  inset: 0;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 180, 216, 0.035) 0%, transparent 70%);
+  filter: blur(60px);
   pointer-events: none;
 }
 
-.cyber-grid-moving {
-  animation: grid-scroll 24s linear infinite;
-}
-
-@keyframes grid-scroll {
-  0% {
-    background-position: 0px 0px;
-  }
-  100% {
-    background-position: 40px 40px;
-  }
-}
-
-/* Hologram dots */
-.hologram-dots {
-  background-image: radial-gradient(rgba(0, 210, 255, 0.15) 1px, transparent 1px);
-  background-size: 16px 16px;
-  pointer-events: none;
-}
-
-/* Scan-line animation effect */
-.scanlines {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
-  );
-  background-size: 100% 4px;
-  z-index: 999;
-  opacity: 0.3;
-}
-
-.scanline-sweep {
+/* Faint Scanning pulse overlay on preview images */
+.clinical-scan-sweep {
   position: absolute;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.8), transparent);
-  box-shadow: 0 0 8px rgba(0, 210, 255, 0.8);
-  animation: sweep 4s ease-in-out infinite;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 180, 216, 0.4), transparent);
+  animation: scan-pulse-slow 4s ease-in-out infinite;
   pointer-events: none;
 }
 
-@keyframes sweep {
-  0% {
-    top: 0%;
-  }
-  50% {
-    top: 100%;
-  }
-  100% {
-    top: 0%;
-  }
-}
-
-/* Audio visualizer-like wave ticks */
-.audio-tick {
-  width: 3px;
-  background: linear-gradient(to top, rgba(181, 0, 255, 0.8), rgba(0, 210, 255, 0.8));
-  border-radius: 2px;
-  transition: height 0.1s ease;
-}
-
-/* Futuristic Neon Lights */
-.text-neon-blue {
-  color: #ffffff;
-  text-shadow: 0 0 8px rgba(0, 210, 255, 0.6), 0 0 16px rgba(0, 210, 255, 0.2);
-}
-
-.text-neon-purple {
-  color: #ffffff;
-  text-shadow: 0 0 8px rgba(181, 0, 255, 0.6), 0 0 16px rgba(181, 0, 255, 0.2);
-}
-
-/* Glowing Border cards */
-.neon-border-blue {
-  border: 1px solid rgba(0, 210, 255, 0.3);
-  box-shadow: inset 0 0 12px rgba(0, 210, 255, 0.05), 0 0 15px rgba(0, 210, 255, 0.1);
-}
-
-.neon-border-purple {
-  border: 1px solid rgba(181, 0, 255, 0.3);
-  box-shadow: inset 0 0 12px rgba(181, 0, 255, 0.05), 0 0 15px rgba(181, 0, 255, 0.1);
-}
-
-/* Radial Gradient Blurs */
-.glow-orb-blue {
-  position: absolute;
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, rgba(0, 210, 255, 0.15) 0%, transparent 70%);
-  filter: blur(40px);
-  pointer-events: none;
-}
-
-.glow-orb-purple {
-  position: absolute;
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, rgba(181, 0, 255, 0.12) 0%, transparent 70%);
-  filter: blur(40px);
-  pointer-events: none;
+@keyframes scan-pulse-slow {
+  0% { top: 0%; }
+  50% { top: 100%; }
+  100% { top: 0%; }
 }

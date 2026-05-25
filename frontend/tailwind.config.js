@@ -8,22 +8,27 @@ export default {
     extend: {
       colors: {
         background: '#000000',
-        neonBlue: '#00d2ff',
-        neonPurple: '#b500ff',
+        charcoal: {
+          900: '#0a0a0c',
+          800: '#121214',
+          700: '#1c1c1e',
+          600: '#2c2c2e',
+        },
+        clinicalCyan: '#00b4d8',
+        clinicalBlue: '#0077b6',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['ui-monospace', 'Consolas', 'monospace'],
-        futuristic: ['Orbitron', 'sans-serif'],
+        display: ['Manrope', 'system-ui', 'sans-serif'],
       },
       animation: {
-        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-        'scan-fast': 'scan-line 2s linear infinite',
+        'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite',
       },
       keyframes: {
-        'pulse-glow': {
-          '0%, 100%': { opacity: '0.4', filter: 'drop-shadow(0 0 5px rgba(0, 210, 255, 0.3))' },
-          '50%': { opacity: '1', filter: 'drop-shadow(0 0 15px rgba(181, 0, 255, 0.6))' },
+        'pulse-subtle': {
+          '0%, 100%': { opacity: '0.4' },
+          '50%': { opacity: '0.85' },
         },
       }
     },
